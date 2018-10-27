@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Sharing.DataAccess.Core
+namespace Sharing.DataAccessCore.Core
 {
     public class SharingContext: DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-LQ4TJA9;Database=SharingDb;Trusted_Connection=True;");
         }
         public DbSet<Machine> Machines { get; set; }
         public DbSet<Location> Locations { get; set; }

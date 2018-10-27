@@ -1,10 +1,13 @@
 ﻿using System;
 
-namespace Sharing.DataAccess.Core
+namespace Sharing.DataAccessCore.Core
 {
-    public class Сharacteristic
+    public class Characteristic: Entity
     {
-        public int Id { get; set; }
+        public Characteristic()
+        {
+            
+        }
         public DateTime WorkTime { get; set; }
         public double Speed { get; set; }
         public double Accelaration { get; set; }

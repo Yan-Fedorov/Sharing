@@ -1,8 +1,8 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
-using Sharing.DataAccess.Core;
+using Sharing.DataAccessCore.Core;
 
-namespace Sharing.DataAccess
+namespace Sharing.DataAccessCore
 {
     public class ConfigFluentApi
     {

@@ -4,7 +4,7 @@ namespace Sharing.DataAccess.Core
 {
     public class RenteredMachine
     {
-        public int Int { get; set; }
+        public int Id { get; set; }
         public virtual Renter Renter { get; set; }
         public virtual Machine Machine { get; set; }
         public DateTime StartDate { get; set; }
