@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharing.DataAccess", "Sharing.DataAccess\Sharing.DataAccess.csproj", "{D9D0EDAC-F0A4-4E46-979D-6240B2821AA6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sharing.WebApi", "Sharing.WebApi\Sharing.WebApi.csproj", "{657A9A99-FFCB-4643-9D70-34A4F3AFD592}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sharing.Domain", "Sharing.Domain\Sharing.Domain.csproj", "{2C2C1F1E-3636-4B08-9C27-C08A73ED2A05}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sharing.DataAccessCore", "Sharing.DataAccessCore\Sharing.DataAccessCore.csproj", "{4C3D0438-479C-4589-84E4-7E769989E6FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharing.Business", "Sharing.Business\Sharing.Business.csproj", "{216AFF47-6389-4722-9B27-CB2BDE3A19D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sharing.Business", "Sharing.Business\Sharing.Business.csproj", "{216AFF47-6389-4722-9B27-CB2BDE3A19D5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sharing.Domain", "Sharing.Domain\Sharing.Domain.csproj", "{BD990269-2162-4A31-8B79-520438222001}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,18 +17,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D9D0EDAC-F0A4-4E46-979D-6240B2821AA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9D0EDAC-F0A4-4E46-979D-6240B2821AA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9D0EDAC-F0A4-4E46-979D-6240B2821AA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9D0EDAC-F0A4-4E46-979D-6240B2821AA6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{657A9A99-FFCB-4643-9D70-34A4F3AFD592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{657A9A99-FFCB-4643-9D70-34A4F3AFD592}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{657A9A99-FFCB-4643-9D70-34A4F3AFD592}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{657A9A99-FFCB-4643-9D70-34A4F3AFD592}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C2C1F1E-3636-4B08-9C27-C08A73ED2A05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C2C1F1E-3636-4B08-9C27-C08A73ED2A05}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C2C1F1E-3636-4B08-9C27-C08A73ED2A05}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C2C1F1E-3636-4B08-9C27-C08A73ED2A05}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4C3D0438-479C-4589-84E4-7E769989E6FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C3D0438-479C-4589-84E4-7E769989E6FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C3D0438-479C-4589-84E4-7E769989E6FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +29,10 @@ Global
 		{216AFF47-6389-4722-9B27-CB2BDE3A19D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{216AFF47-6389-4722-9B27-CB2BDE3A19D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{216AFF47-6389-4722-9B27-CB2BDE3A19D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD990269-2162-4A31-8B79-520438222001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD990269-2162-4A31-8B79-520438222001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD990269-2162-4A31-8B79-520438222001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD990269-2162-4A31-8B79-520438222001}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

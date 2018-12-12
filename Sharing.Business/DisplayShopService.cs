@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Sharing.Business.Interfaces;
 using Sharing.DataAccessCore.Core;
 using Sharing.DataAccessCore.Interfaces;
 using Sharing.Domain.DataTransfer;
@@ -9,7 +9,7 @@ using Sharing.Domain.Mappers;
 
 namespace Sharing.Business
 {
-    public class DisplayShopService
+    public class DisplayShopService: IDisplayShopService
     {
         private readonly IRepository<Renter> _renterRepository;
         private readonly IRepository<Machine> _machineRepository;
@@ -59,13 +59,15 @@ namespace Sharing.Business
                 throw new Exception($"{nameof(renter)} is null");
             }
 
-            if (renter.RenteredMachine == null)
-            {
-                throw new Exception($"{nameof(renter.RenteredMachine)} is null");
-            }
+            
 
             var machines = _machineRepository.GetItemList();
             var availableForRenterMachinesList = new List<Machine>();
+
+            if (renter.RenteredMachine == null)
+            {
+                return machines.ToList();
+            }
 
             foreach (var machine in machines)
             {
@@ -78,10 +80,10 @@ namespace Sharing.Business
             return availableForRenterMachinesList;
         }
 
-        public IList<MachineServerDto> DisplayAllSongs()
+        public IList<MachineServerDto> DisplayAllMachines()
         {
-            var domainSongList = _machineRepository.GetItemList().Select(_mapMachine.AutoMap).ToList();
-            return domainSongList;
+            var domainMachineList = _machineRepository.GetItemList().Select(_mapMachine.AutoMap).ToList();
+            return domainMachineList;
         }
     }
 }

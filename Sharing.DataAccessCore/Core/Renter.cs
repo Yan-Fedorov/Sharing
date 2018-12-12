@@ -2,7 +2,7 @@
 
 namespace Sharing.DataAccessCore.Core
 {
-    public class Renter: Entity
+    public class Renter: User
     {
         public Renter()
         {

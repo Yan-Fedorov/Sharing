@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sharing.DataAccessCore.Core;
 
 namespace Sharing.DataAccessCore.Migrations
 {
     [DbContext(typeof(SharingContext))]
-    partial class SharingContextModelSnapshot : ModelSnapshot
+    [Migration("20181129220647_addRolesAndConnectUserWithLessorAndRenter")]
+    partial class addRolesAndConnectUserWithLessorAndRenter
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,33 +58,6 @@ namespace Sharing.DataAccessCore.Migrations
                     b.HasIndex("SizeId");
 
                     b.ToTable("Characteristics");
-                });
-
-            modelBuilder.Entity("Sharing.DataAccessCore.Core.Lessor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("FirstName")
-                        .HasMaxLength(30);
-
-                    b.Property<string>("LastName")
-                        .HasMaxLength(30);
-
-                    b.Property<decimal>("Money");
-
-                    b.Property<byte[]>("PasswordHash");
-
-                    b.Property<byte[]>("PasswordSalt");
-
-                    b.Property<int>("Role");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Lessors");
                 });
 
             modelBuilder.Entity("Sharing.DataAccessCore.Core.Location", b =>
@@ -175,33 +150,6 @@ namespace Sharing.DataAccessCore.Migrations
                     b.ToTable("MediumActions");
                 });
 
-            modelBuilder.Entity("Sharing.DataAccessCore.Core.Renter", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("FirstName")
-                        .HasMaxLength(30);
-
-                    b.Property<string>("LastName")
-                        .HasMaxLength(30);
-
-                    b.Property<decimal>("Money");
-
-                    b.Property<byte[]>("PasswordHash");
-
-                    b.Property<byte[]>("PasswordSalt");
-
-                    b.Property<int>("Role");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Renters");
-                });
-
             modelBuilder.Entity("Sharing.DataAccessCore.Core.RenteredMachine", b =>
                 {
                     b.Property<int>("Id")
@@ -244,6 +192,67 @@ namespace Sharing.DataAccessCore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sizes");
+                });
+
+            modelBuilder.Entity("Sharing.DataAccessCore.Core.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
+                    b.Property<byte[]>("PasswordHash");
+
+                    b.Property<byte[]>("PasswordSalt");
+
+                    b.Property<int>("Role");
+
+                    b.Property<string>("UserName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
+                });
+
+            modelBuilder.Entity("Sharing.DataAccessCore.Core.Lessor", b =>
+                {
+                    b.HasBaseType("Sharing.DataAccessCore.Core.User");
+
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(30);
+
+                    b.Property<decimal>("Money");
+
+                    b.ToTable("Lessor");
+
+                    b.HasDiscriminator().HasValue("Lessor");
+                });
+
+            modelBuilder.Entity("Sharing.DataAccessCore.Core.Renter", b =>
+                {
+                    b.HasBaseType("Sharing.DataAccessCore.Core.User");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnName("Renter_FirstName")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("LastName")
+                        .HasColumnName("Renter_LastName")
+                        .HasMaxLength(30);
+
+                    b.Property<decimal>("Money")
+                        .HasColumnName("Renter_Money");
+
+                    b.ToTable("Renter");
+
+                    b.HasDiscriminator().HasValue("Renter");
                 });
 
             modelBuilder.Entity("Sharing.DataAccessCore.Core.Characteristic", b =>

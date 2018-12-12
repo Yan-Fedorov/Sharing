@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Sharing.DataAccessCore.Core;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sharing.DataAccess.Core;
 
 namespace Sharing.DataAccess
 {
@@ -12,39 +9,38 @@ namespace Sharing.DataAccess
         public static void Initialize(SharingContext _modelContext)
         {
             _modelContext.Database.EnsureCreated();
+            
 
             var mediumAction1 = new MediumAction()
-            {
-                Id = 0,
+            {  
                 Medium = "Ground",
-
             };
             var mediumAction2 = new MediumAction()
             {
-                Id = 1,
+                
                 Medium = "Air",
             };
             var mediumAction3 = new MediumAction()
             {
-                Id = 1,
+                
                 Medium = "Air-Ground",
             };
 
 
-            if (!_modelContext.MediumActions.Any())
-            {
-                _modelContext.MediumActions.Add(mediumAction1);
-                _modelContext.MediumActions.Add(mediumAction2);
-                _modelContext.MediumActions.Add(mediumAction3);
-            }
+            //if (!_modelContext.MediumActions.Any())
+            //{
+            //    _modelContext.MediumActions.Add(mediumAction1);
+            //    _modelContext.MediumActions.Add(mediumAction2);
+            //    _modelContext.MediumActions.Add(mediumAction3);
+            //}
 
             var applicationMode1 = new ApplicationMode()
             {
-                Id = 0,
+                
                 Mode = "Entertainment"
             };
 
-            if (!_modelContext.MediumActions.Any())
+            if (!_modelContext.ApplicationModes.Any())
             {
                 _modelContext.ApplicationModes.Add(applicationMode1);
 
@@ -52,33 +48,33 @@ namespace Sharing.DataAccess
 
             var machineType1 = new MachineType()
             {
-                Id = 0,
+                
                 ApplicationMode = applicationMode1,
                 MediumAction = mediumAction1
             };
             var machineType2 = new MachineType()
             {
-                Id = 1,
+                
                 ApplicationMode = applicationMode1,
                 MediumAction = mediumAction2
             };
             var machineType3 = new MachineType()
             {
-                Id = 2,
+                
                 ApplicationMode = applicationMode1,
                 MediumAction = mediumAction3
             };
 
-            if (!_modelContext.MediumActions.Any())
+            if (!_modelContext.MachineTypes.Any())
             {
                 _modelContext.MachineTypes.Add(machineType1);
-                _modelContext.MachineTypes.Add(machineType1);
-                _modelContext.MachineTypes.Add(machineType1);
+                _modelContext.MachineTypes.Add(machineType2);
+                _modelContext.MachineTypes.Add(machineType3);
             }
 
             var location1 = new Location()
             {
-                Id = 0,
+                
                 Continent = "Europe",
                 Country = "Germany",
                 City = "Berlin",
@@ -92,12 +88,12 @@ namespace Sharing.DataAccess
 
             var characteristic1 = new Characteristic()
             {
-                Id = 0,
+                
                 Accelaration = 3,
                 ActionRadius = 50,
                 Speed = 34,
                 Weight = 3,
-                WorkTime = new DateTime(0, 0, 0, 3, 30, 0)
+                WorkTime = new DateTime().AddHours(2)
             };
 
             if (!_modelContext.Characteristics.Any())
@@ -107,7 +103,7 @@ namespace Sharing.DataAccess
 
             var machine2 = new Machine()
             {
-                Id = 0,
+                
                 Discount = 9.5m,
                 IsAvailable = true,
                 MachineType = machineType2,
@@ -118,7 +114,7 @@ namespace Sharing.DataAccess
 
             var machine1 = new Machine()
             {
-                Id = 1,
+                
                 Discount = 9.5m,
                 IsAvailable = true,
                 MachineType = machineType1,
@@ -128,7 +124,7 @@ namespace Sharing.DataAccess
             };
             var machine3 = new Machine()
             {
-                Id = 2,
+                
                 Discount = 9.5m,
                 IsAvailable = true,
                 MachineType = machineType3,
@@ -143,8 +139,48 @@ namespace Sharing.DataAccess
                 _modelContext.Machines.Add(machine2);
             }
 
-            
+            var renter1 = new Renter()
+            {
+                
+                FirstName = "1",
+                LastName = "1",
+                Money = 300,
+                UserName = "Ivan"
+            };
 
+            if (!_modelContext.Renters.Any())
+            {
+                _modelContext.Renters.Add(renter1);
+            }
+
+            var renteredMachine1 = new RenteredMachine()
+            {
+                
+                ActivationCode = "1",
+                FinishDate = DateTime.Now.AddDays(30),
+                StartDate = DateTime.Now,
+                Machine = machine1,
+                Price = machine1.Price - machine1.Discount,
+                Renter = renter1
+            };
+
+            var renteredMachine2 = new RenteredMachine()
+            {
+                
+                ActivationCode = "2",
+                FinishDate = DateTime.Now.AddDays(30),
+                StartDate = DateTime.Now,
+                Machine = machine2,
+                Price = machine2.Price - machine2.Discount,
+                Renter = renter1
+            };
+
+            if (!_modelContext.RenteredMachines.Any())
+            {
+                _modelContext.RenteredMachines.Add(renteredMachine1);
+                _modelContext.RenteredMachines.Add(renteredMachine2);
+            }
+            
             _modelContext.SaveChanges();
         }
     }

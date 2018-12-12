@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Sharing.DataAccess;
 
 namespace Sharing.DataAccessCore.Core
 {
@@ -18,7 +19,6 @@ namespace Sharing.DataAccessCore.Core
         public DbSet<MediumAction> MediumActions { get; set; }
         public DbSet<ApplicationMode> ApplicationModes { get; set; }
         public DbSet<MachineType> MachineTypes { get; set; }
-        public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             ConfigFluentApi.ConfigApplicationMode(modelBuilder);
@@ -28,6 +28,7 @@ namespace Sharing.DataAccessCore.Core
             ConfigFluentApi.ConfigRenter(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
+            
         }
 
     }

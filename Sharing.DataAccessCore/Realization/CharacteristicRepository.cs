@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Sharing.DataAccessCore.Realization
 {
-    class CharacteristicRepository : IRepository<Characteristic>
+    public class CharacteristicRepository : IRepository<Characteristic>
     {
         private readonly SharingContext _dataBase;
 

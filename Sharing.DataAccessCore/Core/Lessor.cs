@@ -2,7 +2,7 @@
 
 namespace Sharing.DataAccessCore.Core
 {
-    public class Lessor: Entity
+    public class Lessor: User
     {
         public Lessor()
         {

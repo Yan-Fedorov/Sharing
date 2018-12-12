@@ -5,7 +5,7 @@ using Sharing.DataAccessCore.Core;
 
 namespace Sharing.DataAccessCore.Interfaces
 {
-    interface IGenericRepository<T> where T : Entity
+    public interface IGenericRepository<T> where T : Entity
     {
         IEnumerable<T> GetItemList();
         T GetItem(int id);

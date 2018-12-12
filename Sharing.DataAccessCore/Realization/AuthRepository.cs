@@ -14,15 +14,36 @@ namespace Sharing.DataAccessCore.Realization
             _dataContext = dataContext;
         }       
 
-        public async Task<User> Login(string userName, string password)
+        public async Task<Lessor> LoginAsLessor(string userName, string password)
         {
             if(userName == null || password == null)
             {
                 throw new ArgumentNullException("userName or password", "userName or password in login is null");
             }
-            var user = await _dataContext.Users.FirstOrDefaultAsync(x => x.UserName == userName);
+            var user = await _dataContext.Lessors.FirstOrDefaultAsync(x => x.UserName == userName);
+            
 
-            if(user == null)
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user), "user is null while login");
+            }
+            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            {
+                return null;
+            }
+            return user;
+        }
+
+        public async Task<Renter> LoginAsRenter(string userName, string password)
+        {
+            if (userName == null || password == null)
+            {
+                throw new ArgumentNullException("userName or password", "userName or password in login is null");
+            }
+            
+            var user = await _dataContext.Renters.FirstOrDefaultAsync(x => x.UserName == userName);
+
+            if (user == null)
             {
                 throw new ArgumentNullException(nameof(user), "user is null while login");
             }
@@ -49,7 +70,7 @@ namespace Sharing.DataAccessCore.Realization
             }
         }
 
-        public async Task<User> Register(User user, string password)
+        public async Task<Renter> RegisterAsRenter(Renter user, string password)
         {
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
@@ -57,7 +78,21 @@ namespace Sharing.DataAccessCore.Realization
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
-            await _dataContext.Users.AddAsync(user);
+            await _dataContext.Renters.AddAsync(user);
+            await _dataContext.SaveChangesAsync();
+
+            return user;
+        }
+
+        public async Task<Lessor> RegisterAsLessor(Lessor user, string password)
+        {
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            await _dataContext.Lessors.AddAsync(user);
             await _dataContext.SaveChangesAsync();
 
             return user;
@@ -73,9 +108,19 @@ namespace Sharing.DataAccessCore.Realization
             
         }
 
-        public async Task<bool> UserExists(string userName)
+        public async Task<bool> LessorExists(string userName)
         {
-            if(await _dataContext.Users.AnyAsync(X => X.UserName == userName))
+            if(await _dataContext.Lessors.AnyAsync(X => X.UserName == userName))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> RenterExists(string userName)
+        {
+            if (await _dataContext.Renters.AnyAsync(X => X.UserName == userName))
             {
                 return true;
             }

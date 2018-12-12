@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Sharing.WebApi.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ValuesController : ControllerBase
     {
         // GET api/values

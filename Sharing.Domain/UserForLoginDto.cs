@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sharing.Domain
+﻿namespace Sharing.Domain
 {
     public class UserForLoginDto
     {

@@ -8,7 +8,7 @@ using Sharing.DataAccessCore.Interfaces;
 
 namespace Sharing.DataAccessCore.Realization
 {
-    class Repository<T> : IGenericRepository<T>
+    public class Repository<T> : IGenericRepository<T>
         where T : Entity
     {
         private readonly SharingContext _dataContext;

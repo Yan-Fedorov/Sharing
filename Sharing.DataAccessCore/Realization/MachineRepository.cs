@@ -49,7 +49,7 @@ namespace Sharing.DataAccessCore.Realization
 
         public Machine GetItem(int id)
         {
-            return _dataBase.Machines.FirstOrDefault(x => x.Id == id);
+            return _dataBase.Machines.Include(x => x.Lessor).FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<Machine> GetItemList()

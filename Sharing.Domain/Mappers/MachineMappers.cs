@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Sharing.DataAccessCore.Core;
+﻿using Sharing.DataAccessCore.Core;
 using Sharing.Domain.DataTransfer;
+using System;
 
 namespace Sharing.Domain.Mappers
 {
@@ -10,7 +8,17 @@ namespace Sharing.Domain.Mappers
     {
         public MachineServerDto AutoMap(Machine item)
         {
-            throw new NotImplementedException();
+            return new MachineServerDto
+            {
+                Id = item.Id,
+                Characteristic = item.Characteristic,
+                Discount = item.Discount,
+                IsAvailable = item.IsAvailable,
+                Lessor = item.Lessor,
+                MachineType = item.MachineType,
+                Name = item.Name,
+                Price = item.Price
+            };
         }
 
         public Machine ReAutoMap(MachineServerDto item, Machine initialItem)

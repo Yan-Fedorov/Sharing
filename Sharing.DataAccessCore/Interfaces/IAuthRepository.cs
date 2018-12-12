@@ -9,8 +9,11 @@ namespace Sharing.DataAccessCore.Interfaces
 {
     public interface IAuthRepository
     {
-        Task<User> Register(User user, string password);
-        Task<User> Login(string userName, string password);
-        Task<bool> UserExists(string userName);
+        Task<Lessor> RegisterAsLessor(Lessor user, string password);
+        Task<Renter> RegisterAsRenter(Renter user, string password);
+        Task<Lessor> LoginAsLessor(string userName, string password);
+        Task<Renter> LoginAsRenter(string userName, string password);
+        Task<bool> LessorExists(string userName);
+        Task<bool> RenterExists(string userName);
     }
 }
