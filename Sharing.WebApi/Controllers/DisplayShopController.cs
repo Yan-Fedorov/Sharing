@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sharing.Business.Interfaces;
 
@@ -29,12 +30,13 @@ namespace Sharing.WebApi.Controllers
             return BadRequest("Empty machines list");
         }
 
-        [HttpGet("availableMachines")]
-        public async Task<IActionResult> GetAvailableMachines(int renterId)
+        [Authorize]
+        [HttpGet("availableMachines/{id}")]
+        public IActionResult GetAvailableMachines(int id)
         {
             try
             {
-                var result = _displayShopService.DisplayAllAvailableMachines(renterId);
+                var result = _displayShopService.DisplayAllAvailableMachines(id);
                 if (result != null)
                 {
                     return Ok(result);

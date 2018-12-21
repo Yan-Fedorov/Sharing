@@ -99,7 +99,8 @@ namespace Sharing.WebApi.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return Ok(new { token = tokenHandler.WriteToken(token) });
+            return Ok(new { token = tokenHandler.WriteToken(token),
+            userId = userFromRepo.Id});
         }
 
         [HttpPost("loginAsLessor")]

@@ -11,10 +11,15 @@ namespace Sharing.Business
     {
         private readonly IRepository<Lessor> _lessorRepository;
         private readonly IRepository<Renter> _renterRepository;
-        public UserAccountService(IRepository<Lessor> lessorRepository, IRepository<Renter> renterRepository)
+        private readonly IAuthRepository _authRepository;
+        private readonly IRepository<RenteredMachine> _renterdMachineRepository;
+
+        public UserAccountService(IRepository<Lessor> lessorRepository, IRepository<Renter> renterRepository, IAuthRepository authRepository, IRepository<RenteredMachine> renterdMachineRepository)
         {
             _lessorRepository = lessorRepository;
             _renterRepository = renterRepository;
+            _authRepository = authRepository;
+            _renterdMachineRepository = renterdMachineRepository;
 
         }
         public bool ChangeLessorAccount(Lessor user)
@@ -23,6 +28,11 @@ namespace Sharing.Business
             {
                 throw new ArgumentNullException(nameof(user), "user is null");
             }
+
+            var dbLessor = _renterRepository.GetItem(user.Id);
+
+            user.PasswordHash = dbLessor.PasswordHash;
+            user.PasswordSalt = dbLessor.PasswordHash;
 
             var result = _lessorRepository.Update(user);
 
@@ -43,6 +53,9 @@ namespace Sharing.Business
 
             var result = _lessorRepository.GetItem(id);
 
+            result.PasswordHash = new byte[0];
+            result.PasswordSalt = new byte[0];
+
             return result;
         }
 
@@ -55,6 +68,9 @@ namespace Sharing.Business
 
             var result = _renterRepository.GetItem(id);
 
+            result.PasswordHash = new byte[0];
+            result.PasswordSalt = new byte[0];
+
             return result;
         }
 
@@ -65,7 +81,13 @@ namespace Sharing.Business
                 throw new ArgumentNullException(nameof(user), "user is null");
             }
 
-            var result = _renterRepository.Update(user);
+            var dbRenter = _renterRepository.GetItem(user.Id);
+
+            dbRenter.LastName = user.LastName;
+            dbRenter.FirstName = user.FirstName;
+            dbRenter.UserName = user.UserName;
+
+            var result = _renterRepository.Update(dbRenter);
 
             if (result <= 0)
             {
@@ -97,6 +119,32 @@ namespace Sharing.Business
             var result = _lessorRepository.Delete(id);
 
             return result == 1;
+        }
+
+        public RenteredMachine GetRenteredMachineAccount(int id)
+        {
+
+            if (id < 1)
+            {
+                throw new ArgumentException("id is less then 1", nameof(id));
+            }
+
+            var result = _renterdMachineRepository.GetItem(id);
+            return result;
+        }
+        public bool ActivateDron(int id)
+        {
+            if (id < 1)
+            {
+                throw new ArgumentException("id is less then 1", nameof(id));
+            }
+
+            var result = _renterdMachineRepository.GetItem(id);
+
+            result.isActive = true;
+
+
+            return _renterdMachineRepository.Update(result) > 0;
         }
     }
 }

@@ -24,5 +24,6 @@ namespace Sharing.DataAccessCore.Core
         public DateTime FinishDate { get; set; }
         public decimal Price { get; set; }
         public string ActivationCode { get; set; }
+        public bool isActive { get; set; }
     }
 }

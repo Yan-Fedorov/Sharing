@@ -15,5 +15,6 @@ namespace Sharing.DataAccessCore.Interfaces
         Task<Renter> LoginAsRenter(string userName, string password);
         Task<bool> LessorExists(string userName);
         Task<bool> RenterExists(string userName);
+        bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt);
     }
 }

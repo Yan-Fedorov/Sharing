@@ -10,5 +10,7 @@ namespace Sharing.Business.Interfaces
         Renter GetRenterAccount(int id);
         Lessor GetLessorAccount(int id);
         bool ChangeLessorAccount(Lessor user);
+        RenteredMachine GetRenteredMachineAccount(int id);
+        bool ActivateDron(int id);
     }
 }

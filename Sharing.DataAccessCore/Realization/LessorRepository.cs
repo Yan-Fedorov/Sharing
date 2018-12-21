@@ -50,7 +50,7 @@ namespace Sharing.DataAccessCore.Realization
 
         public Lessor GetItem(int id)
         {
-            return _dataBase.Lessors.FirstOrDefault(x => x.Id == id);
+            return _dataBase.Lessors.Include(x => x.Machines).FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<Lessor> GetItemList()

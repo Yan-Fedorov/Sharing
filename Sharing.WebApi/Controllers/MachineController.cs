@@ -47,7 +47,7 @@ namespace Sharing.WebApi.Controllers
             }
             return StatusCode(500);
         }
-        [HttpGet()]
+        [HttpGet]
         public IActionResult GetMachine(int id)
         {
             if (id < 1)
@@ -58,6 +58,24 @@ namespace Sharing.WebApi.Controllers
             try
             {
                 var result = _machineService.GetItem(id);
+                return Ok(result);
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest("id is less then 1");
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet("getMachines")]
+        public IActionResult GetMachines()
+        {
+            try
+            {
+                var result = _machineService.GetItemList();
                 return Ok(result);
             }
             catch (ArgumentException)

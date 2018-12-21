@@ -49,7 +49,7 @@ namespace Sharing.DataAccessCore.Realization
 
         public Renter GetItem(int id)
         {
-            return _dataBase.Renters.FirstOrDefault(x => x.Id == id);
+            return  _dataBase.Renters.Include(x => x.RenteredMachine).ThenInclude(x => x.Machine).FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<Renter> GetItemList()

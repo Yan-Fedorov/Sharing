@@ -21,8 +21,8 @@ namespace Sharing.WebApi.Controllers
             _userAccountService = userAccountService;
         }
         
-        [HttpGet("renter")]
-        public async Task<IActionResult> GetRenterAccount(int id)
+        [HttpGet("renter/{id}")]
+        public IActionResult GetRenterAccount(int id)
         {
             if (id < 1)
             {
@@ -43,6 +43,52 @@ namespace Sharing.WebApi.Controllers
                 return StatusCode(500);
             }
         }
+
+        [HttpGet("renteredMachine/{id}")]
+        public IActionResult GetRenteredMachine(int id)
+        {
+            if (id < 1)
+            {
+                return BadRequest("id is less then 1");
+            }
+
+            try
+            {
+                var result = _userAccountService.GetRenteredMachineAccount(id);
+                return Ok(result);
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest("id is less then 1");
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet("activateDron/{id}")]
+        public IActionResult ActivateDron(int id)
+        {
+            if (id < 1)
+            {
+                return BadRequest("id is less then 1");
+            }
+            try
+            {
+                var result = _userAccountService.ActivateDron(id);
+                return Ok(result);
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest("id is less then 1");
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
         [HttpPost("renter")]
         public async Task<IActionResult> ChangeRenterAccount(Renter renter)
         {
@@ -63,7 +109,7 @@ namespace Sharing.WebApi.Controllers
             {
                 return BadRequest(nameof(renter));
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 return StatusCode(500);
             }

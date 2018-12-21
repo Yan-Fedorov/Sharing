@@ -47,14 +47,15 @@ namespace Sharing.DataAccessCore.Realization
             return id;
         }
 
+
         public RenteredMachine GetItem(int id)
         {
-            return _dataBase.RenteredMachines.FirstOrDefault(x => x.Id == id);
+            return _dataBase.RenteredMachines.Include(x => x.Machine).FirstOrDefault(x => x.Id == id);
         }
 
         public IEnumerable<RenteredMachine> GetItemList()
         {
-            return _dataBase.RenteredMachines;
+            return _dataBase.RenteredMachines.Include(x => x.Machine);
         }
 
         public int Update(RenteredMachine item)
