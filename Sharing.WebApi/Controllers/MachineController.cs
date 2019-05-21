@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sharing.Business.Interfaces;
 using Sharing.DataAccessCore.Core;
 using Sharing.DataAccessCore.Interfaces;
 
@@ -15,15 +16,18 @@ namespace Sharing.WebApi.Controllers
     [ApiController]
     public class MachineController : ControllerBase
     {
-        private readonly IRepository<Machine> _machineService;
+        private readonly IRepository<CloudResource> _machineService;
+        private readonly IUserAccountService _userAccountService;
+        private readonly IRepository<Lessor> _lessorRepository;
 
-        public MachineController(IRepository<Machine> machineService)
+        public MachineController(IRepository<CloudResource> machineService, IUserAccountService userAccountService, IRepository<Lessor> lessorRepository)
         {
             _machineService = machineService;
+            _lessorRepository = lessorRepository;
         }
         [Authorize]
-        [HttpPost()]
-        public IActionResult ChangeMachine(Machine machine)
+        [HttpPost]
+        public IActionResult ChangeMachine(CloudResource machine)
         {
             if (machine == null)
             {
@@ -47,7 +51,8 @@ namespace Sharing.WebApi.Controllers
             }
             return StatusCode(500);
         }
-        [HttpGet]
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(CloudResource), StatusCodes.Status200OK)]
         public IActionResult GetMachine(int id)
         {
             if (id < 1)
@@ -88,6 +93,7 @@ namespace Sharing.WebApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete]
         public IActionResult DeleteMachine(int id)
         {
@@ -117,15 +123,16 @@ namespace Sharing.WebApi.Controllers
 
         [Authorize]
         [HttpPost("create")]
-        public IActionResult CreateMachine(Machine machine)
+        public IActionResult CreateMachine(CloudResource machine)
         {
-            if (machine != null)
+            if (machine == null)
             {
                 return BadRequest(nameof(machine));
             }
 
             try
             {
+                machine.Lessor = _lessorRepository.GetItem(machine.Lessor.Id);
                 var result = _machineService.Create(machine);
                 if (result >= 1)
                 {

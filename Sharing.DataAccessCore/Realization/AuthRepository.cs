@@ -34,7 +34,7 @@ namespace Sharing.DataAccessCore.Realization
             return user;
         }
 
-        public async Task<Renter> LoginAsRenter(string userName, string password)
+        public async Task<Customer> LoginAsRenter(string userName, string password)
         {
             if (userName == null || password == null)
             {
@@ -70,7 +70,7 @@ namespace Sharing.DataAccessCore.Realization
             }
         }
 
-        public async Task<Renter> RegisterAsRenter(Renter user, string password)
+        public async Task<Customer> RegisterAsRenter(Customer user, string password)
         {
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);

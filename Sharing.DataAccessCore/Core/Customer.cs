@@ -2,16 +2,16 @@
 
 namespace Sharing.DataAccessCore.Core
 {
-    public class Renter: User
+    public class Customer: User
     {
-        public Renter()
+        public Customer()
         {
             
         }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public decimal Money { get; set; }
-        public virtual List<RenteredMachine> RenteredMachine { get; set; }
+        public virtual List<RenteredResource> RenteredMachine { get; set; }
 
     }
 }

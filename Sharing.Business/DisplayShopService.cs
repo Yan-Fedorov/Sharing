@@ -11,13 +11,13 @@ namespace Sharing.Business
 {
     public class DisplayShopService: IDisplayShopService
     {
-        private readonly IRepository<Renter> _renterRepository;
-        private readonly IRepository<Machine> _machineRepository;
-        private readonly IRepository<RenteredMachine> _renteredMachineRepository;
+        private readonly IRepository<Customer> _renterRepository;
+        private readonly IRepository<CloudResource> _machineRepository;
+        private readonly IRepository<RenteredResource> _renteredMachineRepository;
         private readonly IRepository<Lessor> _lessorRepository;
-        private readonly IMapper<Machine, MachineServerDto> _mapMachine;
+        private readonly IMapper<CloudResource, MachineServerDto> _mapMachine;
 
-        public DisplayShopService(IRepository<Renter> renterRepository, IRepository<Machine> machineRepository, IRepository<RenteredMachine> renteredMachineRepository, IRepository<Lessor> lessorRepository, IMapper<Machine, MachineServerDto> mapMachine)
+        public DisplayShopService(IRepository<Customer> renterRepository, IRepository<CloudResource> machineRepository, IRepository<RenteredResource> renteredMachineRepository, IRepository<Lessor> lessorRepository, IMapper<CloudResource, MachineServerDto> mapMachine)
         {
             _renterRepository = renterRepository;
             _machineRepository = machineRepository;
@@ -45,7 +45,7 @@ namespace Sharing.Business
             return machinesDtoAvailableForBuyByUser;
         }
 
-        private List<Machine> GetAvailableForRenterMachines(int renterId)
+        private List<CloudResource> GetAvailableForRenterMachines(int renterId)
         {
             if (renterId <= 0)
             {
@@ -62,7 +62,7 @@ namespace Sharing.Business
             
 
             var machines = _machineRepository.GetItemList();
-            var availableForRenterMachinesList = new List<Machine>();
+            var availableForRenterMachinesList = new List<CloudResource>();
 
             if (renter.RenteredMachine == null)
             {
@@ -71,7 +71,7 @@ namespace Sharing.Business
 
             foreach (var machine in machines)
             {
-                if (!renter.RenteredMachine.Any(x => x.Machine.Id == machine.Id))
+                if (!renter.RenteredMachine.Any(x => x.CloudResource.Id == machine.Id))
                 {
                     availableForRenterMachinesList.Add(machine);
                 }

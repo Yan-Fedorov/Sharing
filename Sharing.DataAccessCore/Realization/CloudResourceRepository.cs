@@ -7,16 +7,16 @@ using Sharing.DataAccessCore.Interfaces;
 
 namespace Sharing.DataAccessCore.Realization
 {
-    public class MachineRepository : IRepository<Machine>
+    public class CloudResourceRepository : IRepository<CloudResource>
     {
         private readonly SharingContext _dataBase;
 
-        public MachineRepository(SharingContext dataBase)
+        public CloudResourceRepository(SharingContext dataBase)
         {
             _dataBase = dataBase;
         }
 
-        public int Create(Machine item)
+        public int Create(CloudResource item)
         {
             if (item != null)
             {
@@ -35,7 +35,7 @@ namespace Sharing.DataAccessCore.Realization
                 throw new ArgumentException("id < 0 in MachineRepository");
             }
 
-            Machine machine = _dataBase.Machines.Find(id);
+            CloudResource machine = _dataBase.Machines.Find(id);
 
             if (machine == null)
             {
@@ -47,17 +47,17 @@ namespace Sharing.DataAccessCore.Realization
             return id;
         }
 
-        public Machine GetItem(int id)
+        public CloudResource GetItem(int id)
         {
             return _dataBase.Machines.Include(x => x.Lessor).FirstOrDefault(x => x.Id == id);
         }
 
-        public IEnumerable<Machine> GetItemList()
+        public IEnumerable<CloudResource> GetItemList()
         {
             return _dataBase.Machines;
         }
 
-        public int Update(Machine item)
+        public int Update(CloudResource item)
         {
             if (item != null)
             {

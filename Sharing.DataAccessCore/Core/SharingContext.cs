@@ -9,13 +9,13 @@ namespace Sharing.DataAccessCore.Core
         {
             optionsBuilder.UseSqlServer(@"Server=DESKTOP-LQ4TJA9;Database=SharingDb;Trusted_Connection=True;");
         }
-        public DbSet<Machine> Machines { get; set; }
+        public DbSet<CloudResource> Machines { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Lessor> Lessors { get; set; }
-        public DbSet<Renter> Renters { get; set; }
+        public DbSet<Customer> Renters { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<Characteristic> Characteristics { get; set; }
-        public DbSet<RenteredMachine> RenteredMachines { get; set; }
+        public DbSet<RenteredResource> RenteredMachines { get; set; }
         public DbSet<MediumAction> MediumActions { get; set; }
         public DbSet<ApplicationMode> ApplicationModes { get; set; }
         public DbSet<MachineType> MachineTypes { get; set; }

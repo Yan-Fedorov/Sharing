@@ -7,11 +7,11 @@ namespace Sharing.Business
 {
     public class ShopService: IShopService
     {
-        private readonly IRepository<Renter> _renterRepository;
-        private readonly IRepository<Machine> _machineRepository;
-        private readonly IRepository<RenteredMachine> _renteredMachineRepository;
+        private readonly IRepository<Customer> _renterRepository;
+        private readonly IRepository<CloudResource> _machineRepository;
+        private readonly IRepository<RenteredResource> _renteredMachineRepository;
         private readonly IRepository<Lessor> _lessorRepository;
-        public ShopService(IRepository<Renter> renterRepository, IRepository<Machine> machineRepository, IRepository<RenteredMachine> renteredMachineRepository, IRepository<Lessor> lessorRepository)
+        public ShopService(IRepository<Customer> renterRepository, IRepository<CloudResource> machineRepository, IRepository<RenteredResource> renteredMachineRepository, IRepository<Lessor> lessorRepository)
         {
             _renterRepository = renterRepository;
             _machineRepository = machineRepository;
@@ -26,14 +26,14 @@ namespace Sharing.Business
                 throw new ArgumentException("renterId is less then 1 or machineId is less then 1 in musicStoreService in BuySong", "renterId or machineId");
             }
 
-            Renter renter = _renterRepository.GetItem(renterId);
+            Customer renter = _renterRepository.GetItem(renterId);
 
             if (renter == null)
             {
                 throw new Exception("Renter is null");
             }
 
-            Machine machine = _machineRepository.GetItem(machineId);
+            CloudResource machine = _machineRepository.GetItem(machineId);
 
             if (machine == null)
             {
@@ -52,8 +52,8 @@ namespace Sharing.Business
                 throw new Exception($"Renter has not enough money for rent {machine.Name} machine");
             }
 
-            string activationCode = " ";
-            var renteredMachine = new RenteredMachine(renter, machine, starTime, endTime, machine.Price, activationCode);
+            string activationCode = "9873";
+            var renteredMachine = new RenteredResource(renter, machine, starTime, endTime, machine.Price, activationCode);
             var renteredMachineId = _renteredMachineRepository.Create(renteredMachine);
 
             renter.Money -= machine.Price;

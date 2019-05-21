@@ -36,13 +36,13 @@ namespace Sharing.WebApi
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddScoped<IAuthRepository, AuthRepository>();
-            services.AddScoped<IRepository<Renter>, RenterRepository>();
+            services.AddScoped<IRepository<Customer>, CustomerRepository>();
             services.AddScoped<IRepository<Lessor>, LessorRepository>();
-            services.AddScoped<IRepository<Machine>, MachineRepository>();
-            services.AddScoped<IRepository<RenteredMachine>, RenteredMachineRepository>();
+            services.AddScoped<IRepository<CloudResource>, CloudResourceRepository>();
+            services.AddScoped<IRepository<RenteredResource>, RenteredMachineRepository>();
             services.AddScoped<IRepository<Characteristic>, CharacteristicRepository>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(Repository<>));
-            services.AddScoped<IMapper<Machine, MachineServerDto>, MachineMappers>();
+            services.AddScoped<IMapper<CloudResource, MachineServerDto>, MachineMappers>();
             services.AddScoped<IUserAccountService, UserAccountService>();
             services.AddScoped<IShopService, ShopService>();
             services.AddScoped<IDisplayShopService, DisplayShopService>();

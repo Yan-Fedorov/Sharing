@@ -25,12 +25,12 @@ namespace Sharing.DataAccessCore
         }
         public static void ConfigRenter(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Renter>().Property(p => p.FirstName).HasMaxLength(30);
-            modelBuilder.Entity<Renter>().Property(p => p.LastName).HasMaxLength(30);
+            modelBuilder.Entity<Customer>().Property(p => p.FirstName).HasMaxLength(30);
+            modelBuilder.Entity<Customer>().Property(p => p.LastName).HasMaxLength(30);
         }
         public static void ConfigMachine(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Machine>().Property(p => p.Name).HasMaxLength(30);
+            modelBuilder.Entity<CloudResource>().Property(p => p.Name).HasMaxLength(30);
         }
     }
 }

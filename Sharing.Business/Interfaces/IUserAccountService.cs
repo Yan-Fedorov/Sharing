@@ -6,11 +6,11 @@ namespace Sharing.Business.Interfaces
     {
         bool DeleteLessorAccount(int id);
         bool DeleteRenterAccount(int id);
-        bool ChangeRenterAccount(Renter user);
-        Renter GetRenterAccount(int id);
+        bool ChangeRenterAccount(Customer user);
+        Customer GetRenterAccount(int id);
         Lessor GetLessorAccount(int id);
         bool ChangeLessorAccount(Lessor user);
-        RenteredMachine GetRenteredMachineAccount(int id);
+        RenteredResource GetRenteredMachineAccount(int id);
         bool ActivateDron(int id);
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sharing.Business.Interfaces;
 
@@ -20,9 +17,11 @@ namespace Sharing.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RenterMachine(int renterId, int machineId, DateTime startTime, DateTime endTime)
+        public async Task<IActionResult> RenterMachine([FromBody] RentDto rentDto)
         {
-            if (renterId < 1 || machineId < 1 || startTime == new DateTime() || endTime == DateTime.Now ||
+            var startTime = new DateTime(rentDto.StartDate.Year, rentDto.StartDate.Month, rentDto.StartDate.Day);
+            var endTime = new DateTime(rentDto.EndDate.Year, rentDto.EndDate.Month, rentDto.EndDate.Day);
+            if (rentDto.RenterId < 1 || rentDto.MachineId < 1 || startTime == new DateTime() || endTime == DateTime.Now ||
                 endTime == new DateTime())
             {
                 return BadRequest("Something wrong with Parameters");
@@ -30,7 +29,7 @@ namespace Sharing.WebApi.Controllers
 
             try
             {
-                var result = _shopService.RenterMachine(renterId, machineId, startTime, endTime);
+                var result = _shopService.RenterMachine(rentDto.RenterId, rentDto.MachineId, startTime, endTime);
 
                 if (result >= 1)
                 {
@@ -47,6 +46,27 @@ namespace Sharing.WebApi.Controllers
             }
         }
 
+    }
+    public class NgbDate
+    {
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public int Day { get; set; }
+       
+        public NgbDate()
+        {
 
+        }
+    }
+    public class RentDto
+    {
+        public int RenterId { get; set; }
+        public int MachineId { get; set; }
+        public NgbDate StartDate { get; set; }
+        public NgbDate EndDate { get; set; }
+        public RentDto()
+        {
+
+        }
     }
 }

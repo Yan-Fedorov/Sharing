@@ -11,6 +11,6 @@ namespace Sharing.DataAccessCore.Core
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public decimal Money { get; set; }
-        public virtual List<Machine> Machines { get; set; }
+        public virtual List<CloudResource> Machines { get; set; }
     }
 }

@@ -101,7 +101,7 @@ namespace Sharing.DataAccess
                 _modelContext.Characteristics.Add(characteristic1);
             }
 
-            var machine2 = new Machine()
+            var machine2 = new CloudResource()
             {
                 
                 Discount = 9.5m,
@@ -112,7 +112,7 @@ namespace Sharing.DataAccess
                 Characteristic = characteristic1
             };
 
-            var machine1 = new Machine()
+            var machine1 = new CloudResource()
             {
                 
                 Discount = 9.5m,
@@ -122,7 +122,7 @@ namespace Sharing.DataAccess
                 Price = 15.5m,
                 Characteristic = characteristic1
             };
-            var machine3 = new Machine()
+            var machine3 = new CloudResource()
             {
                 
                 Discount = 9.5m,
@@ -139,7 +139,7 @@ namespace Sharing.DataAccess
                 _modelContext.Machines.Add(machine2);
             }
 
-            var renter1 = new Renter()
+            var renter1 = new Customer()
             {
                 
                 FirstName = "1",
@@ -153,26 +153,26 @@ namespace Sharing.DataAccess
                 _modelContext.Renters.Add(renter1);
             }
 
-            var renteredMachine1 = new RenteredMachine()
+            var renteredMachine1 = new RenteredResource()
             {
                 
                 ActivationCode = "1",
                 FinishDate = DateTime.Now.AddDays(30),
                 StartDate = DateTime.Now,
-                Machine = machine1,
+                CloudResource = machine1,
                 Price = machine1.Price - machine1.Discount,
-                Renter = renter1
+                Customer = renter1
             };
 
-            var renteredMachine2 = new RenteredMachine()
+            var renteredMachine2 = new RenteredResource()
             {
                 
                 ActivationCode = "2",
                 FinishDate = DateTime.Now.AddDays(30),
                 StartDate = DateTime.Now,
-                Machine = machine2,
+                CloudResource = machine2,
                 Price = machine2.Price - machine2.Discount,
-                Renter = renter1
+                Customer = renter1
             };
 
             if (!_modelContext.RenteredMachines.Any())

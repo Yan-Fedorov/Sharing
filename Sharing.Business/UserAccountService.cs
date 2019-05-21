@@ -10,11 +10,11 @@ namespace Sharing.Business
     public class UserAccountService: IUserAccountService
     {
         private readonly IRepository<Lessor> _lessorRepository;
-        private readonly IRepository<Renter> _renterRepository;
+        private readonly IRepository<Customer> _renterRepository;
         private readonly IAuthRepository _authRepository;
-        private readonly IRepository<RenteredMachine> _renterdMachineRepository;
+        private readonly IRepository<RenteredResource> _renterdMachineRepository;
 
-        public UserAccountService(IRepository<Lessor> lessorRepository, IRepository<Renter> renterRepository, IAuthRepository authRepository, IRepository<RenteredMachine> renterdMachineRepository)
+        public UserAccountService(IRepository<Lessor> lessorRepository, IRepository<Customer> renterRepository, IAuthRepository authRepository, IRepository<RenteredResource> renterdMachineRepository)
         {
             _lessorRepository = lessorRepository;
             _renterRepository = renterRepository;
@@ -59,7 +59,7 @@ namespace Sharing.Business
             return result;
         }
 
-        public Renter GetRenterAccount(int id)
+        public Customer GetRenterAccount(int id)
         {
             if (id < 1)
             {
@@ -74,7 +74,7 @@ namespace Sharing.Business
             return result;
         }
 
-        public bool ChangeRenterAccount(Renter user)
+        public bool ChangeRenterAccount(Customer user)
         {
             if (user == null)
             {
@@ -121,7 +121,7 @@ namespace Sharing.Business
             return result == 1;
         }
 
-        public RenteredMachine GetRenteredMachineAccount(int id)
+        public RenteredResource GetRenteredMachineAccount(int id)
         {
 
             if (id < 1)

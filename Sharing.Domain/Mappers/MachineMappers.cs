@@ -4,9 +4,9 @@ using System;
 
 namespace Sharing.Domain.Mappers
 {
-    public class MachineMappers : IMapper<Machine, MachineServerDto>
+    public class MachineMappers : IMapper<CloudResource, MachineServerDto>
     {
-        public MachineServerDto AutoMap(Machine item)
+        public MachineServerDto AutoMap(CloudResource item)
         {
             return new MachineServerDto
             {
@@ -21,7 +21,7 @@ namespace Sharing.Domain.Mappers
             };
         }
 
-        public Machine ReAutoMap(MachineServerDto item, Machine initialItem)
+        public CloudResource ReAutoMap(MachineServerDto item, CloudResource initialItem)
         {
             throw new NotImplementedException();
         }

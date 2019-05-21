@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -32,7 +33,7 @@ namespace Sharing.WebApi.Controllers
 
             userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
 
-            if(await _authRepository.LessorExists(userForRegisterDto.Username))
+            if (await _authRepository.LessorExists(userForRegisterDto.Username))
             {
                 return BadRequest("Username alrady exists");
             }
@@ -59,7 +60,7 @@ namespace Sharing.WebApi.Controllers
                 return BadRequest("Username alrady exists");
             }
 
-            var userToCreate = new Renter()
+            var userToCreate = new Customer()
             {
                 UserName = userForRegisterDto.Username
             };
@@ -69,11 +70,12 @@ namespace Sharing.WebApi.Controllers
             return StatusCode(201);
         }
         [HttpPost("loginAsRenter")]
+        [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> LoginAsRenter(UserForLoginDto userForLoginDto)
         {
             var userFromRepo = await _authRepository.LoginAsRenter(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
 
-            if(userFromRepo == null)
+            if (userFromRepo == null)
             {
                 return Unauthorized();
             }
@@ -99,8 +101,8 @@ namespace Sharing.WebApi.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return Ok(new { token = tokenHandler.WriteToken(token),
-            userId = userFromRepo.Id});
+            return Ok(new LoginResponse{ Token = tokenHandler.WriteToken(token),
+                Id = userFromRepo.Id });
         }
 
         [HttpPost("loginAsLessor")]
@@ -134,7 +136,12 @@ namespace Sharing.WebApi.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return Ok(new { token = tokenHandler.WriteToken(token) });
+            return Ok(new { token = tokenHandler.WriteToken(token), id = userFromRepo.Id });
         }
+    }
+    public class LoginResponse {
+        public int Id { get; set; }
+        public string Token { get; set; }
+
     }
 }

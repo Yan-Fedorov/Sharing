@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Sharing.DataAccessCore.Realization
 {
-    public class RenteredMachineRepository : IRepository<RenteredMachine>
+    public class RenteredMachineRepository : IRepository<RenteredResource>
     {
         private readonly SharingContext _dataBase;
 
@@ -16,7 +16,7 @@ namespace Sharing.DataAccessCore.Realization
             _dataBase = dataBase;
         }
 
-        public int Create(RenteredMachine item)
+        public int Create(RenteredResource item)
         {
             if (item != null)
             {
@@ -35,7 +35,7 @@ namespace Sharing.DataAccessCore.Realization
                 throw new ArgumentException("id < 0 in RenteredMachineRepository");
             }
 
-            RenteredMachine renteredMachine = _dataBase.RenteredMachines.Find(id);
+            RenteredResource renteredMachine = _dataBase.RenteredMachines.Find(id);
 
             if (renteredMachine == null)
             {
@@ -48,17 +48,17 @@ namespace Sharing.DataAccessCore.Realization
         }
 
 
-        public RenteredMachine GetItem(int id)
+        public RenteredResource GetItem(int id)
         {
-            return _dataBase.RenteredMachines.Include(x => x.Machine).FirstOrDefault(x => x.Id == id);
+            return _dataBase.RenteredMachines.Include(x => x.CloudResource).FirstOrDefault(x => x.Id == id);
         }
 
-        public IEnumerable<RenteredMachine> GetItemList()
+        public IEnumerable<RenteredResource> GetItemList()
         {
-            return _dataBase.RenteredMachines.Include(x => x.Machine);
+            return _dataBase.RenteredMachines.Include(x => x.CloudResource);
         }
 
-        public int Update(RenteredMachine item)
+        public int Update(RenteredResource item)
         {
             if (item != null)
             {

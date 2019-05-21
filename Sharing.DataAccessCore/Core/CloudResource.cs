@@ -1,8 +1,8 @@
 ﻿namespace Sharing.DataAccessCore.Core
 {
-    public class Machine: Entity
+    public class CloudResource: Entity
     {
-        public Machine()
+        public CloudResource()
         {
             
         }

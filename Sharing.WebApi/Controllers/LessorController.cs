@@ -46,7 +46,7 @@ namespace Sharing.WebApi.Controllers
             }
             return StatusCode(500);
         }
-        [HttpGet("lessor")]
+        [HttpGet("lessor/{id}")]
         public async Task<IActionResult> GetLessorAccount(int id)
         {
             if (id < 1)

@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sharing.Business;
 using Sharing.Business.Interfaces;
@@ -9,7 +10,7 @@ using Sharing.DataAccessCore.Core;
 
 namespace Sharing.WebApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserAccountController : ControllerBase
@@ -22,6 +23,7 @@ namespace Sharing.WebApi.Controllers
         }
         
         [HttpGet("renter/{id}")]
+        [ProducesResponseType(typeof(Customer), StatusCodes.Status200OK)]
         public IActionResult GetRenterAccount(int id)
         {
             if (id < 1)
@@ -43,7 +45,7 @@ namespace Sharing.WebApi.Controllers
                 return StatusCode(500);
             }
         }
-
+        [ProducesResponseType(typeof(RenteredResource), StatusCodes.Status200OK)]
         [HttpGet("renteredMachine/{id}")]
         public IActionResult GetRenteredMachine(int id)
         {
@@ -68,6 +70,7 @@ namespace Sharing.WebApi.Controllers
         }
 
         [HttpGet("activateDron/{id}")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public IActionResult ActivateDron(int id)
         {
             if (id < 1)
@@ -89,8 +92,35 @@ namespace Sharing.WebApi.Controllers
             }
         }
 
+        [HttpGet("activateDronByString/{id}")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public IActionResult ActivateDron(string id)
+        {
+            int requestedId;
+            int.TryParse(id, out requestedId);
+
+            if (requestedId < 1)
+            {
+                return BadRequest("id is less then 1");
+            }
+            try
+            {
+                var result = _userAccountService.ActivateDron(requestedId);
+                return Ok(result);
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest("id is less then 1");
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+        
+
         [HttpPost("renter")]
-        public async Task<IActionResult> ChangeRenterAccount(Renter renter)
+        public async Task<IActionResult> ChangeRenterAccount(Customer renter)
         {
             if (renter == null)
             {

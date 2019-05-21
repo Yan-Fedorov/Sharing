@@ -7,16 +7,16 @@ using Sharing.DataAccessCore.Interfaces;
 
 namespace Sharing.DataAccessCore.Realization
 {
-    public class RenterRepository : IRepository<Renter>
+    public class CustomerRepository : IRepository<Customer>
     {
         private readonly SharingContext _dataBase;
 
-        public RenterRepository(SharingContext dataBase)
+        public CustomerRepository(SharingContext dataBase)
         {
             _dataBase = dataBase;
         }
 
-        public int Create(Renter item)
+        public int Create(Customer item)
         {
             if (item != null)
             {
@@ -35,7 +35,7 @@ namespace Sharing.DataAccessCore.Realization
                 throw new ArgumentException("id < 0 in RenterRepository");
             }
 
-            Renter renter = _dataBase.Renters.Find(id);
+            Customer renter = _dataBase.Renters.Find(id);
 
             if (renter == null)
             {
@@ -47,17 +47,17 @@ namespace Sharing.DataAccessCore.Realization
             return id;
         }
 
-        public Renter GetItem(int id)
+        public Customer GetItem(int id)
         {
-            return  _dataBase.Renters.Include(x => x.RenteredMachine).ThenInclude(x => x.Machine).FirstOrDefault(x => x.Id == id);
+            return  _dataBase.Renters.Include(x => x.RenteredMachine).ThenInclude(x => x.CloudResource).FirstOrDefault(x => x.Id == id);
         }
 
-        public IEnumerable<Renter> GetItemList()
+        public IEnumerable<Customer> GetItemList()
         {
             return _dataBase.Renters;
         }
 
-        public int Update(Renter item)
+        public int Update(Customer item)
         {
             if (item != null)
             {
